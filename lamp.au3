@@ -78,7 +78,7 @@ Func Info($val)
 EndFunc
 
 Func Autostart()
-    If(TrayItemGetState($autostartitem) = ($TRAY_CHECKED + $TRAY_ENABLE)) Then
+  If(TrayItemGetState($autostartitem) = ($TRAY_CHECKED + $TRAY_ENABLE)) Then
 		FileCreateShortcut(@AutoItExe, @StartupDir & "\lamp.lnk", @WorkingDir)
 	Else
 		FileDelete(@StartupDir & "\lamp.lnk")
@@ -87,7 +87,7 @@ EndFunc
 
 Func Notify()
 	;MsgBox(4096, "Allora!? ", "chiamata")
-	Local $val = RunWait(@ComSpec & " /c " & 'ludpc', "", @SW_HIDE)
+	Local $val = RunWait(@ComSpec & " /c " & 'ludpc.exe', "", @SW_HIDE)
 	;MsgBox(0, "Program returned with exit code:", $val)
 	If($val > 0) Then
 		Info($val)

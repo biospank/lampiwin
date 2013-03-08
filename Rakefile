@@ -14,6 +14,7 @@ Releasy::Project.new do
   exclude_encoding # Applications that don't use advanced encoding (e.g. Japanese characters) can save build size with this.
 
   # If building on a Windows machine, :windows_folder and/or :windows_installer are recommended.
+  ######## after build move bin lib src and ludpc.exe to root directory ########
   add_build :windows_folder do
     icon "resources/ludpc.ico"
     executable_type :console # Assuming you don't want it to run with a console window.

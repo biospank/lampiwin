@@ -3,12 +3,12 @@
 
 [Setup]
 AppName=Lamp
-AppVerName=Lamp 2.0
+AppVerName=Lamp 3.0
 DefaultDirName={pf}\Lamp
 DefaultGroupName=Lamp
 AllowNoIcons=yes
 DisableDirPage=yes
-OutputBaseFilename=Lamp-2.0-setup
+OutputBaseFilename=Lamp-3.0-setup
 Compression=lzma
 SolidCompression=yes
 

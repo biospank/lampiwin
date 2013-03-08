@@ -1,3 +1,5 @@
+# to build launch 'rake build:windows:folder'
+
 require 'socket'
 require 'timeout'
 require 'net/http'
