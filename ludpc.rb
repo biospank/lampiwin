@@ -9,11 +9,12 @@ module UDPClient
   LAMP_UDP_PORT = 12345
 
   def self.broadcast_to_potential_servers(content, udp_port)
-    body = {:reply_port => LAMP_UDP_PORT, :content => content}
+    body = "reply_port=#{LAMP_UDP_PORT},content=#{content}"
 
     s = UDPSocket.new
     s.setsockopt(Socket::SOL_SOCKET, Socket::SO_BROADCAST, true)
-    s.send(Marshal.dump(body), 0, '<broadcast>', udp_port)
+    #s.send(Marshal.dump(body), 0, '<broadcast>', udp_port)
+    s.send(body, 0, '<broadcast>', udp_port)
     s.close
   end
 
@@ -25,8 +26,8 @@ module UDPClient
       begin
         body, sender = timeout(time_out) { s.recvfrom(1024) }
         server_ip = sender[3]
-        data = Marshal.load(body)
-        code.call(data, server_ip)
+        #data = Marshal.load(body)
+        code.call(body, server_ip)
         s.close
       rescue Timeout::Error
         s.close
