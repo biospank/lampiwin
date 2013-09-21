@@ -3,11 +3,11 @@ require 'releasy'
 
 #<<<
 Releasy::Project.new do
-  name "ludpc"
+  name "lampicli"
   version "3.0.0"
   verbose # Can be removed if you don't want to see all build messages.
 
-  executable "ludpc.rb"
+  executable "lampicli.rb"
   #files "lib/**/*.rb", "config/**/*.yml", "media/**/*.*"
   #exposed_files "README.html", "LICENSE.txt"
   #add_link "http://my_application.github.com", "My Application website"
@@ -16,7 +16,7 @@ Releasy::Project.new do
   # If building on a Windows machine, :windows_folder and/or :windows_installer are recommended.
   ######## after build move bin lib src and ludpc.exe to root directory ########
   add_build :windows_folder do
-    icon "resources/ludpc.ico"
+    icon "resources/lampicli.ico"
     executable_type :console # Assuming you don't want it to run with a console window.
     add_package :exe # Windows self-extracting archive.
   end

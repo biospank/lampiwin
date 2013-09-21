@@ -22,7 +22,7 @@ Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescrip
 
 [Files]
 Source: "lamp.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "ludpc.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "lampicli.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: ".\src\*"; DestDir: "{app}\src"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: ".\bin\*"; DestDir: "{app}\bin"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: ".\lib\*"; DestDir: "{app}\lib"; Flags: ignoreversion recursesubdirs createallsubdirs

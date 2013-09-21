@@ -1,10 +1,13 @@
 #Include <Constants.au3>
 #NoTrayIcon
 
-;Opt("TrayMenuMode",1)   ; Default tray menu items (Script Paused/Exit) will not be shown.
+Opt("TrayMenuMode",2)   ; Default tray menu items (Script Paused/Exit) will not be shown.
 Opt("TrayAutoPause",0)
 Opt("TrayOnEventMode",1) ; con questa modalita TrayGetMsg() non viene utilizzata
 Opt("WinTitleMatchMode", 2)
+
+Global Const $CURRENT_VERSION = 30
+
 ; classi windows
 Global Const $skype_clsid = "[CLASS:TCallNotificationWindow]" ; Skype
 Global Const $camfrog6_ita_title1 = "(Online)" ; Camfrog 6
@@ -30,6 +33,11 @@ TraySetToolTip("Lamp!")
 Global $testitem = TrayCreateItem("Test lamp")
 TrayItemSetOnEvent($testitem,"Test")
 
+Global $resetitem = TrayCreateItem("Reset")
+TrayItemSetOnEvent($resetitem,"Reset")
+
+TrayCreateItem("")
+
 Global $autostartitem = TrayCreateItem("Autostart")
 If( FileExists(@StartupDir & '\lamp.lnk') ) Then
 	TrayItemSetState($autostartitem, ($TRAY_CHECKED + $TRAY_ENABLE))
@@ -43,6 +51,8 @@ TrayItemSetOnEvent($autostartitem,"Autostart")
 ;~ 		FileCreateShortcut(@AutoItExe, @StartupDir & "\lamp.lnk", @WorkingDir)
 ;~ 	EndIf
 ;~ EndIf
+
+CheckForUpdates()
 
 ; ciclo infinito
 While 1
@@ -77,6 +87,11 @@ Func Info($val)
 	MsgBox(4096, "Error " & $val, "Unable to find Lamp device: check lan cable connection")
 EndFunc
 
+Func InfoDownload($val)
+	TrayTip("A new varsion is available", "Please download at: https://dl.dropboxusercontent.com/u/621599/work/Lamp-3.0-setup.exe", 10, 1)
+	;MsgBox(4096, "Download ", "A new varsion is available.\nPlease download at: https://dl.dropboxusercontent.com/u/621599/work/Lamp-3.0-setup.exe")
+EndFunc
+
 Func Autostart()
   If(TrayItemGetState($autostartitem) = ($TRAY_CHECKED + $TRAY_ENABLE)) Then
 		FileCreateShortcut(@AutoItExe, @StartupDir & "\lamp.lnk", @WorkingDir)
@@ -87,10 +102,34 @@ EndFunc
 
 Func Notify()
 	;MsgBox(4096, "Allora!? ", "chiamata")
-	Local $val = RunWait(@ComSpec & " /c " & 'ludpc.exe', "", @SW_HIDE)
+	Local $val = RunWait(@ComSpec & " /c " & 'lampicli.exe notify_event', "", @SW_HIDE)
 	;MsgBox(0, "Program returned with exit code:", $val)
 	If($val > 0) Then
 		Info($val)
+	EndIf
+EndFunc
+
+Func Reset()
+	;MsgBox(4096, "Allora!? ", "chiamata")
+	Local $val = RunWait(@ComSpec & " /c " & 'lampicli.exe reset_event', "", @SW_HIDE)
+	;MsgBox(0, "Program returned with exit code:", $val)
+	If($val > 0) Then
+		Info($val)
+	EndIf
+EndFunc
+
+Func CheckForUpdates()
+	;ConsoleWrite("Checking for updates..." & @CRLF)
+	Local $val = RunWait(@ComSpec & " /c " & 'lampicli.exe check_for_updates', "", @SW_HIDE)
+	;ConsoleWrite("returned val=" & $val & @CRLF)
+	If($val > 0 And $val < 3) Then
+		Info($val)
+	EndIf
+
+	If($val > 0) Then
+		If($val > $CURRENT_VERSION) Then
+			InfoDownload($val)
+		EndIf
 	EndIf
 EndFunc
 
