@@ -52,7 +52,7 @@ TrayItemSetOnEvent($autostartitem,"Autostart")
 ;~ 	EndIf
 ;~ EndIf
 
-sleep(10000)
+sleep(30000)
 
 CheckForUpdates()
 
