@@ -52,6 +52,8 @@ TrayItemSetOnEvent($autostartitem,"Autostart")
 ;~ 	EndIf
 ;~ EndIf
 
+sleep(10000)
+
 CheckForUpdates()
 
 ; ciclo infinito
@@ -88,7 +90,7 @@ Func Info($val)
 EndFunc
 
 Func InfoDownload($val)
-	TrayTip("A new varsion is available", "Please download at: https://dl.dropboxusercontent.com/u/621599/work/Lamp-3.0-setup.exe", 10, 1)
+	TrayTip("A new version is available", "Please download at: https://dl.dropboxusercontent.com/u/621599/work/Lamp-3.0-setup.exe", 10, 1)
 	;MsgBox(4096, "Download ", "A new varsion is available.\nPlease download at: https://dl.dropboxusercontent.com/u/621599/work/Lamp-3.0-setup.exe")
 EndFunc
 
