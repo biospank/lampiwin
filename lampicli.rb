@@ -17,7 +17,7 @@ module UDPClient
     s.close
   end
 
-  def self.start_server_listener(time_out=3, &code)
+  def self.start_server_listener(time_out=5, &code)
     Thread.fork do
       s = UDPSocket.new
       s.bind('0.0.0.0', LAMP_UDP_PORT)
@@ -35,7 +35,7 @@ module UDPClient
     end
   end
 
-  def self.query_server(content, server_udp_port, time_out=3, &code)
+  def self.query_server(content, server_udp_port, time_out=5, &code)
     thread = start_server_listener(time_out) do |data, server_ip|
       code.call(data, server_ip)
     end
@@ -66,7 +66,7 @@ class Lampicli < Thor
       #puts "Querying http server...#{pi_ip}"
       uri = URI.parse("http://#{pi_ip}:4567/lamp/win")
 
-      response = Timeout::timeout(3) do
+      response = Timeout::timeout(10) do
         http = Net::HTTP.new(uri.host, uri.port)
         http.request(Net::HTTP::Get.new(uri.request_uri))
       end
@@ -89,7 +89,7 @@ class Lampicli < Thor
       #puts "Querying http server...#{pi_ip}"
       uri = URI.parse("http://#{pi_ip}:4567/lamp/led/reset")
 
-      response = Timeout::timeout(3) do
+      response = Timeout::timeout(10) do
         http = Net::HTTP.new(uri.host, uri.port)
         http.request(Net::HTTP::Get.new(uri.request_uri))
       end
@@ -112,7 +112,7 @@ class Lampicli < Thor
       #puts "Querying http server...#{pi_ip}"
       uri = URI.parse("http://#{pi_ip}:4567/lamp/win/version")
 
-      response = Timeout::timeout(3) do
+      response = Timeout::timeout(10) do
         http = Net::HTTP.new(uri.host, uri.port)
         http.request(Net::HTTP::Get.new(uri.request_uri))
       end
